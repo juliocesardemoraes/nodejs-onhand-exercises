@@ -10,11 +10,14 @@ app.use(
 );
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.status(200).send({ working: true });
+app.get('/', (request, response) => {
+  response.status(200).send({ working: true });
 });
 
-// Crie uma rota GET que retorna o seu nome
+// Crie uma rota GET chamada server-error que retorne um erro 500
+
+// Crie um router para as rotas de name assim como na aula
+// Esse router devera ter uma rota get no /name que retorne o seu nome e um status 200.
 
 const PORT = process.env.PORT || 3000;
 
