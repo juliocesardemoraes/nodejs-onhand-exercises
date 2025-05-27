@@ -1,6 +1,24 @@
-## 🧠 Explicação da Tarefa: Criar uma Rota GET `/name` que Retorna o Seu Nome
+## Explicação da Tarefa: Criar uma Rota GET `/name` que Retorna o Seu Nome
 
 Nesta tarefa, você vai **criar uma rota GET** utilizando o framework **Express.js**. O objetivo é que o servidor responda com o **seu nome e um status HTTP 200 (OK)** quando o endpoint `/name` for acessado.
+
+### CONFIGURAÇÃO INICIAL
+
+```
+npm install
+
+// Para rodar o backend
+npm run start
+
+// Para rodar o backend em modo desenvolvedor
+npm run dev
+
+// Para rodar os testes
+npm run test
+
+// Para rodar os testes(que atualizam toda vez que você atualiza o código)
+npm run test-dev
+```
 
 ---
 
@@ -31,19 +49,19 @@ E um **status HTTP 200** para indicar que a requisição foi bem-sucedida.
 O servidor Express já está configurado da seguinte forma:
 
 ```js
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
 
 const app = express();
 
 app.use(
   cors({
-    exposedHeaders: ['X-Total-Count'],
+    exposedHeaders: ["X-Total-Count"],
   })
 );
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.status(200).send({ working: true });
 });
 
@@ -52,7 +70,7 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 // Este IF abaixo é só para meu caso de testes, não é necessário para uma aplicação real
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
   });
