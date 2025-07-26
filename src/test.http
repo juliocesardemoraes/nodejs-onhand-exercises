@@ -1,0 +1,12 @@
+### POST USERS
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "id": 6,
+    "name": "javier",
+    "email": "javier@gmail.com",
+    "birthdate": "1997-03-17",
+    "address": "Centro, 404, Goiaba - NS",
+    "active": false
+}

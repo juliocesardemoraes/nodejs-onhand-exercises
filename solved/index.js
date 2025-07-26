@@ -16,11 +16,18 @@ app.get("/", (request, response) => {
 });
 
 app.post("/users", (request, response) => {
-  // Caso o request.body não tenha um id não insira nenhum usuário
-  // retorne o código 400 e a mensagem Id faltante
+  console.log(request.body);
 
+  if (!request.body.id) {
+    return response.status(400).send({ message: "Id faltante" });
+  }
+
+  usersMock.push(request.body);
   // Faça uma implementação baseada no usersMock
   // Retorne o array de users
+
+  // Caso o request.body venha vazio não insira nenhum usuário
+
   response.status(201).send({});
 });
 
