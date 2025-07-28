@@ -27,6 +27,20 @@ app.patch("/users", (request, response) => {
 app.patch("/users/:id", (request, response) => {
   // Caso o request.body não tenha um id não insira nenhum usuário
   // retorne o código 400 e a mensagem Id faltante
+  const id = request.params.id;
+  const body = request.body;
+  let isUserValid = false;
+
+  for (let i = 0; i < usersMock.length; i++) {
+    if (usersMock[i].id == id) {
+      isUserValid = true;
+      usersMock[i] = { ...usersMock[i], ...body };
+      break;
+    }
+  }
+
+  if (isUserValid === false)
+    return response.status(404).send({ message: "Id não encontrado" });
 
   // Faça uma implementação baseada no usersMock
   // Retorne o array de users

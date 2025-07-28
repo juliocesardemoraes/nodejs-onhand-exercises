@@ -12,22 +12,23 @@ describe("PATCH /users", () => {
   };
 
   const mockUserWithMissingIdToInsert = {
-    name: "javier",
-    email: "javier@gmail.com",
+    name: "test",
+    email: "teste@gmail.com",
     birthdate: "1997-03-17",
     address: "Centro, 404, Goiaba - NS",
     active: false,
   };
 
-  function getRandomInt(max, min = 0) {
+  function getRandomInt(min = 0, max) {
     const num = Math.floor(Math.random() * max);
     num + min;
     return num;
   }
 
   it("A rota deve existir", async () => {
-    const generatedId = getRandomInt(1000, 100);
+    const generatedId = getRandomInt(100, 1000);
     mockUserToInsert.id = generatedId;
+    usersMock.push(mockUserToInsert);
 
     const response = await request(app)
       .patch(`/users/${mockUserToInsert.id}`)
@@ -38,12 +39,46 @@ describe("PATCH /users", () => {
     expect(response.statusCode).not.toBe(404);
   });
 
-  // it("A rota deve retornar código 400 caso não exista id no body da request", async () => {
-  //   const response = await request(app)
-  //     .post(`/users`)
-  //     .send(mockUserWithMissingIdToInsert);
-  //   expect(response.statusCode).toBe(400);
-  // });
+  it("A rota deve retornar código 404 caso não exista o id no usersMock", async () => {
+    const generatedId = getRandomInt(1000, 10000);
+
+    const response = await request(app)
+      .patch(`/users/${generatedId}`)
+      .send(mockUserWithMissingIdToInsert);
+
+    expect(response.statusCode).toBe(404);
+  });
+
+  it("A rota deve retornar código 200 e fazer um PATCH do usuário no usersMock", async () => {
+    const generatedId = getRandomInt(1000, 10000);
+    mockUserToInsert.id = generatedId;
+    usersMock.push(mockUserToInsert);
+
+    const mockUserToUpdate = {
+      name: `javier Update ${generatedId}`,
+      email: "javierupdate@gmail.com",
+      active: true,
+    };
+
+    const response = await request(app)
+      .patch(`/users/${generatedId}`)
+      .send(mockUserToUpdate);
+
+    let wasInserted = false;
+
+    for (let i = 0; i < usersMock.length; i++) {
+      if (usersMock[i].name == mockUserToUpdate.name) {
+        console.log("mockUSER IGUAL NAME");
+        wasInserted = true;
+      }
+    }
+
+    if (wasInserted === false) {
+      expect(false).toBeTruthy();
+    }
+
+    expect(response.statusCode).toBe(200);
+  });
 
   // it("Deve adicionar um novo usuario ao array de usersMock quando chamado", async () => {
   //   const response = await request(app).post(`/users`).send(mockUserToInsert);
