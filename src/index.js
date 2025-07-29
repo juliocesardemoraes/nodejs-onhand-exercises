@@ -18,20 +18,9 @@ app.get("/", (request, response) => {
 
 app.delete("/users/:id", (request, response) => {
   const id = request.params.id;
-  const body = request.body;
-  let userExists = false;
+  // Deve adicionar uma lógica para remover o usuário de acordo com o parametro passado na rota
 
-  for (let i = 0; i < usersMock.length; i++) {
-    if (usersMock[i].id == Number(id)) {
-      usersMock.splice(i, 1);
-      userExists = true;
-    }
-  }
-
-  if (userExists === false) {
-    return response.status(404).send({ message: "usuário não encontrado!" });
-  }
-
+  // Deve adicionar uma validação para verificar se o usuário existe no usersMock
   response.status(200).send({ users: usersMock });
 });
 

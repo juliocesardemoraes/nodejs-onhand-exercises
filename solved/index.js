@@ -16,42 +16,23 @@ app.get("/", (request, response) => {
   response.status(200).send({ working: true });
 });
 
-app.patch("/users/:id", (request, response) => {
+app.delete("/users/:id", (request, response) => {
   const id = request.params.id;
   const body = request.body;
-  let isUserValid = false;
+  let userExists = false;
 
   for (let i = 0; i < usersMock.length; i++) {
     if (usersMock[i].id == Number(id)) {
-      isUserValid = true;
-      usersMock[i] = { ...usersMock[i], ...body };
-      break;
+      usersMock.splice(i, 1);
+      userExists = true;
     }
   }
 
-  if (isUserValid === false)
-    return response.status(404).send({ message: "Id não encontrado" });
-
-  response.status(200).send({});
-});
-
-app.put("/users/:id", (request, response) => {
-  const id = request.params.id;
-  const body = request.body;
-  let isUserValid = false;
-
-  for (let i = 0; i < usersMock.length; i++) {
-    if (usersMock[i].id == Number(id)) {
-      isUserValid = true;
-      usersMock[i] = { ...usersMock[i], ...body };
-      break;
-    }
+  if (userExists === false) {
+    return response.status(404).send({ message: "usuário não encontrado!" });
   }
 
-  if (isUserValid === false)
-    return response.status(404).send({ message: "Id não encontrado" });
-
-  response.status(200).send({});
+  response.status(200).send({ users: usersMock });
 });
 
 export default app;
