@@ -1,0 +1,10 @@
+{
+  "typeAcquisition": {
+    "enable": true
+  },
+  "compilerOptions": {
+    "checkJs": true,
+    "target": "ES6"
+  },
+  "include": ["**/*.js", "node_modules/@types/jest"]
+}

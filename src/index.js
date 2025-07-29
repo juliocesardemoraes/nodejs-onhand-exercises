@@ -1,3 +1,4 @@
+// @ts-nocheck
 import express from "express";
 import cors from "cors";
 import { usersMock } from "./mocks/users.js";
@@ -32,7 +33,7 @@ app.patch("/users/:id", (request, response) => {
   let isUserValid = false;
 
   for (let i = 0; i < usersMock.length; i++) {
-    if (usersMock[i].id == id) {
+    if (usersMock[i].id == Number(id)) {
       isUserValid = true;
       usersMock[i] = { ...usersMock[i], ...body };
       break;
