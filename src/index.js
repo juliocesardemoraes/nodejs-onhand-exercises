@@ -16,28 +16,23 @@ app.get("/", (request, response) => {
   response.status(200).send({ working: true });
 });
 
-app.patch("/users/:id", (request, response) => {
+app.delete("/users/:id", (request, response) => {
   const id = request.params.id;
   const body = request.body;
+  let userExists = false;
 
-  // Você deve por meio do params id modificar um usuário no usersMock que já foi
-  // importado neste arquivo
+  for (let i = 0; i < usersMock.length; i++) {
+    if (usersMock[i].id == Number(id)) {
+      usersMock.splice(i, 1);
+      userExists = true;
+    }
+  }
 
-  // Caso o id não exista dentro do usersMock retorne um erro 404
+  if (userExists === false) {
+    return response.status(404).send({ message: "usuário não encontrado!" });
+  }
 
-  response.status(200).send({});
-});
-
-app.put("/users/:id", (request, response) => {
-  const id = request.params.id;
-  const body = request.body;
-
-  // Você deve por meio do params id modificar um usuário no usersMock que já foi
-  // importado neste arquivo
-
-  // Caso o id não exista dentro do usersMock retorne um erro 404
-
-  response.status(200).send({});
+  response.status(200).send({ users: usersMock });
 });
 
 export default app;
