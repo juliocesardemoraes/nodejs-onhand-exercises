@@ -1,3 +1,4 @@
+// @ts-nocheck
 import express from "express";
 import cors from "cors";
 import { usersMock } from "./mocks/users.js";
@@ -15,20 +16,42 @@ app.get("/", (request, response) => {
   response.status(200).send({ working: true });
 });
 
-app.post("/users", (request, response) => {
-  console.log(request.body);
+app.patch("/users/:id", (request, response) => {
+  const id = request.params.id;
+  const body = request.body;
+  let isUserValid = false;
 
-  if (!request.body.id) {
-    return response.status(400).send({ message: "Id faltante" });
+  for (let i = 0; i < usersMock.length; i++) {
+    if (usersMock[i].id == Number(id)) {
+      isUserValid = true;
+      usersMock[i] = { ...usersMock[i], ...body };
+      break;
+    }
   }
 
-  usersMock.push(request.body);
-  // Faça uma implementação baseada no usersMock
-  // Retorne o array de users
+  if (isUserValid === false)
+    return response.status(404).send({ message: "Id não encontrado" });
 
-  // Caso o request.body venha vazio não insira nenhum usuário
+  response.status(200).send({});
+});
 
-  response.status(201).send({});
+app.put("/users/:id", (request, response) => {
+  const id = request.params.id;
+  const body = request.body;
+  let isUserValid = false;
+
+  for (let i = 0; i < usersMock.length; i++) {
+    if (usersMock[i].id == Number(id)) {
+      isUserValid = true;
+      usersMock[i] = { ...usersMock[i], ...body };
+      break;
+    }
+  }
+
+  if (isUserValid === false)
+    return response.status(404).send({ message: "Id não encontrado" });
+
+  response.status(200).send({});
 });
 
 export default app;
