@@ -19,18 +19,11 @@ app.get("/", (request, response) => {
 app.patch("/users/:id", (request, response) => {
   const id = request.params.id;
   const body = request.body;
-  let isUserValid = false;
 
-  for (let i = 0; i < usersMock.length; i++) {
-    if (usersMock[i].id == Number(id)) {
-      isUserValid = true;
-      usersMock[i] = { ...usersMock[i], ...body };
-      break;
-    }
-  }
+  // Você deve por meio do params id modificar um usuário no usersMock que já foi
+  // importado neste arquivo
 
-  if (isUserValid === false)
-    return response.status(404).send({ message: "Id não encontrado" });
+  // Caso o id não exista dentro do usersMock retorne um erro 404
 
   response.status(200).send({});
 });
@@ -38,18 +31,11 @@ app.patch("/users/:id", (request, response) => {
 app.put("/users/:id", (request, response) => {
   const id = request.params.id;
   const body = request.body;
-  let isUserValid = false;
 
-  for (let i = 0; i < usersMock.length; i++) {
-    if (usersMock[i].id == Number(id)) {
-      isUserValid = true;
-      usersMock[i] = { ...usersMock[i], ...body };
-      break;
-    }
-  }
+  // Você deve por meio do params id modificar um usuário no usersMock que já foi
+  // importado neste arquivo
 
-  if (isUserValid === false)
-    return response.status(404).send({ message: "Id não encontrado" });
+  // Caso o id não exista dentro do usersMock retorne um erro 404
 
   response.status(200).send({});
 });
