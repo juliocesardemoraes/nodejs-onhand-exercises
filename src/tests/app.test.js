@@ -116,7 +116,7 @@ describe("PUT /users", () => {
     usersMock.push(mockUserToInsert);
 
     const response = await request(app)
-      .patch(`/users/${mockUserToInsert.id}`)
+      .put(`/users/${mockUserToInsert.id}`)
       .send(mockUserToInsert);
 
     console.log("STATUS", response.statusCode);
@@ -124,17 +124,25 @@ describe("PUT /users", () => {
     expect(response.statusCode).not.toBe(404);
   });
 
-  xit("deve retornar código 404 se o id não existir no usersMock", async () => {
-    const generatedId = getRandomInt(1000, 10000);
+  it("deve retornar código 404 se o id não existir no usersMock", async () => {
+    const mockUserNotFound = {
+      name: "notfoundmock",
+      email: "notfound@gmail.com",
+      birthdate: "1999-02-24",
+      address: "Centro, 280, Goiaba - NS",
+      active: true,
+    };
+
+    const generatedId = getRandomInt(2000, 3000);
 
     const response = await request(app)
-      .patch(`/users/${generatedId}`)
-      .send(mockUserWithMissingIdToInsert);
+      .put(`/users/${generatedId}`)
+      .send(mockUserNotFound);
 
     expect(response.statusCode).toBe(404);
   });
 
-  xit("deve retornar código 200 e atualizar os dados do usuário no usersMock", async () => {
+  it("deve retornar código 200 e atualizar os dados do usuário no usersMock", async () => {
     const generatedId = getRandomInt(1000, 10000);
     mockUserToInsert.id = generatedId;
     usersMock.push(mockUserToInsert);
@@ -146,7 +154,7 @@ describe("PUT /users", () => {
     };
 
     const response = await request(app)
-      .patch(`/users/${generatedId}`)
+      .put(`/users/${generatedId}`)
       .send(mockUserToUpdate);
 
     let wasInserted = false;
